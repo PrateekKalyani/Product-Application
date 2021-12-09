@@ -1,31 +1,22 @@
 package com.example.retrofitapplication.di
 
-import com.example.retrofitapplication.data.ProductApiService
-import com.example.retrofitapplication.data.ProductRemoteDataSource
-import com.example.retrofitapplication.data.ProductRemoteDataSourceImpl
-import com.example.retrofitapplication.domain.ProductRepository
-import com.example.retrofitapplication.domain.ProductRepositoryImpl
+import android.content.Context
+import com.example.retrofitapplication.data.*
 import com.example.retrofitapplication.domain.ProductUseCase
-import com.example.retrofitapplication.interfaces.CacheMapper
-import com.example.retrofitapplication.interfaces.NetworkMapper
+import com.example.retrofitapplication.mapper.CacheMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object ProductModule {
 
     @Provides
-    fun getProductRemoteDataSource(productApiService : ProductApiService) : ProductRemoteDataSource {
-        return ProductRemoteDataSourceImpl(productApiService = productApiService)
-    }
-
-    @Provides
-    fun getNetworkMapper() : NetworkMapper {
-        return NetworkMapper()
+    fun getContext(@ApplicationContext context: Context) : Context {
+        return context
     }
 
     @Provides
@@ -34,10 +25,20 @@ object ProductModule {
     }
 
     @Provides
-    fun getProductRepository(productRemoteDataSource: ProductRemoteDataSource,
-    networkMapper: NetworkMapper,
-    cacheMapper: CacheMapper) : ProductRepository {
-        return ProductRepositoryImpl(productRemoteDataSource = productRemoteDataSource, networkMapper = networkMapper, chacheMapper = cacheMapper)
+    fun getProductRemoteDataSource(productApiService : ProductApiService) : ProductRemoteDataSource {
+        return ProductRemoteDataSourceImpl(productApiService = productApiService)
+    }
+
+    @Provides
+    fun getProductRepository(
+        productRemoteDataSource: ProductRemoteDataSource,
+        cacheMapper: CacheMapper
+    ) : ProductRepository {
+
+        return ProductRepositoryImpl(
+            productRemoteDataSource = productRemoteDataSource,
+            cacheMapper = cacheMapper
+        )
     }
 
     @Provides

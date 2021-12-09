@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 interface ProductCacheDataSource {
 
-    fun getProduct() : LiveData<List<ProductEntity>>
+    fun getProducts() : LiveData<List<ProductEntity>>
 
     fun saveProducts(productList : List<ProductEntity>)
 }
@@ -18,9 +18,8 @@ constructor(
     private val productDao: ProductDao
     ): ProductCacheDataSource {
 
-    override fun getProduct(): LiveData<List<ProductEntity>> {
-        val productList = productDao.getProducts()
-        return productList
+    override fun getProducts(): LiveData<List<ProductEntity>> {
+        return productDao.getProducts()
     }
 
     override fun saveProducts(productList: List<ProductEntity>) {

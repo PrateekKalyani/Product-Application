@@ -4,21 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.retrofitapplication.ProductModel
 import com.example.retrofitapplication.R
 import com.example.retrofitapplication.databinding.SingleProductItemBinding
-import com.example.retrofitapplication.models.Product
+import com.example.retrofitapplication.models.ProductModel
 
 class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
 
-    private val productList by lazy { mutableListOf<Product>() }
+    private val productList by lazy { mutableListOf<ProductModel>() }
 
     class ProductViewHolder(private val binding : SingleProductItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         private val context by lazy { binding.root.context }
 
         fun bind(
-            product : Product
+            product : ProductModel
         ) {
             binding.run {
                 productTitle.text = product.title
@@ -37,12 +36,16 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-
-        return ProductViewHolder(SingleProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ProductViewHolder(
+            binding = SingleProductItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-
         holder.bind(product = productList[position])
     }
 
@@ -50,7 +53,7 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
         return productList.size
     }
 
-    fun submitList(productList : List<Product>) {
+    fun submitList(productList : List<ProductModel>) {
         this.productList.clear()
         this.productList.addAll(productList)
         notifyDataSetChanged()

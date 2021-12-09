@@ -1,33 +1,24 @@
-package com.example.retrofitapplication.domain
+package com.example.retrofitapplication.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import com.example.retrofitapplication.ProductModel
-import com.example.retrofitapplication.data.ProductRemoteDataSource
-import com.example.retrofitapplication.interfaces.CacheMapper
-import com.example.retrofitapplication.interfaces.NetworkMapper
-import com.example.retrofitapplication.models.Product
+import com.example.retrofitapplication.mapper.CacheMapper
+import com.example.retrofitapplication.models.ProductModel
 import javax.inject.Inject
 
-interface ProductRepository{
+interface ProductRepository {
 
-    fun getProduct() : LiveData<List<Product>>
+    fun getProduct() : LiveData<List<ProductModel>>
 }
 
 class ProductRepositoryImpl
     @Inject
     constructor (
         private val productRemoteDataSource: ProductRemoteDataSource,
-        val networkMapper: NetworkMapper,
-        val chacheMapper : CacheMapper
+        private val cacheMapper : CacheMapper
         ) : ProductRepository {
 
-    override fun getProduct(): LiveData<List<Product>> {
+    override fun getProduct(): LiveData<List<ProductModel>> {
 
-        val productList = Transformations.map(productRemoteDataSource.getProduct()) {
-            networkMapper.mapFromEntityList(it)
-        }
-
-        return productList
+        return productRemoteDataSource.getProduct()
     }
 }

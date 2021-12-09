@@ -9,7 +9,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -22,10 +21,10 @@ object RoomClient {
 
         if(databaseBuilder == null) {
             databaseBuilder = Room.databaseBuilder(
-                context, ProductDatabase::class.java,
-                ProductDatabase.databaseName)
-                .build()
-                .productDao()
+                context,
+                ProductDatabase::class.java,
+                ProductDatabase.databaseName
+                ).build().productDao()
         }
 
         return databaseBuilder!!

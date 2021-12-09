@@ -1,6 +1,6 @@
 package com.example.retrofitapplication.data
 
-import com.example.retrofitapplication.ProductModel
+import com.example.retrofitapplication.models.ProductModel
 import retrofit2.Call
 import retrofit2.http.GET
 

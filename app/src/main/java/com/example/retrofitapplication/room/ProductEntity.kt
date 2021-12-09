@@ -3,7 +3,7 @@ package com.example.retrofitapplication.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.retrofitapplication.RatingModel
+import com.example.retrofitapplication.models.RatingModel
 
 @Entity(tableName = "products")
 data class ProductEntity(

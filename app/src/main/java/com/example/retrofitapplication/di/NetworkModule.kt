@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RestClient {
+object NetworkModule {
 
     private const val BASE_URL = "https://fakestoreapi.com/"
     private var apiService : ProductApiService? = null
