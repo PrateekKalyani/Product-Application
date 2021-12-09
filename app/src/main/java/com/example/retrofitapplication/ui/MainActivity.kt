@@ -30,6 +30,11 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = ProductAdapter()
         }
+
+        binding.productRefreshLayout.setOnRefreshListener {
+            setProductList()
+            binding.productRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun setProductList() {

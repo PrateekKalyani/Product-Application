@@ -17,7 +17,6 @@ object RoomClient {
 
     private var databaseBuilder : ProductDao? = null
 
-    @Singleton
     @Provides
     fun provideProductDao(@ApplicationContext context : Context) : ProductDao{
 

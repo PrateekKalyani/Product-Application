@@ -61,6 +61,8 @@ dependencies {
     def roomVersion = "2.3.0"
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
+
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }
 
 kapt {

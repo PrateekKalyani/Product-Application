@@ -1,5 +1,6 @@
 package com.example.retrofitapplication.interfaces
 
+import androidx.lifecycle.LiveData
 import com.example.retrofitapplication.models.Product
 import com.example.retrofitapplication.ProductModel
 import javax.inject.Inject
@@ -35,7 +36,7 @@ class NetworkMapper
         )
     }
 
-    fun mapFromEntityList(entities : List<ProductModel>) : List<Product>{
-        return entities.map { mapFromEntity(it) }
+    fun mapFromEntityList(productList : List<ProductModel>): List<Product> {
+        return productList.map { mapFromEntity(it) }
     }
 }

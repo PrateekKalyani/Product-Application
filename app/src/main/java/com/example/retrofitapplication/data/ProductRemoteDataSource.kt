@@ -11,7 +11,6 @@ import javax.inject.Inject
 interface ProductRemoteDataSource {
 
     fun getProduct() : LiveData<List<ProductModel>>
-
 }
 
 class ProductRemoteDataSourceImpl
@@ -33,7 +32,7 @@ class ProductRemoteDataSourceImpl
             }
 
             override fun onFailure(call: Call<List<ProductModel>>, t: Throwable) {
-
+                println("data not received")
             }
         })
 

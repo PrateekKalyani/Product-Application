@@ -7,17 +7,18 @@ import com.bumptech.glide.Glide
 import com.example.retrofitapplication.ProductModel
 import com.example.retrofitapplication.R
 import com.example.retrofitapplication.databinding.SingleProductItemBinding
+import com.example.retrofitapplication.models.Product
 
 class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
 
-    private val productList by lazy { mutableListOf<ProductModel>() }
+    private val productList by lazy { mutableListOf<Product>() }
 
     class ProductViewHolder(private val binding : SingleProductItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         private val context by lazy { binding.root.context }
 
         fun bind(
-            product : ProductModel
+            product : Product
         ) {
             binding.run {
                 productTitle.text = product.title
@@ -49,7 +50,8 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
         return productList.size
     }
 
-    fun submitList(productList : List<ProductModel>) {
+    fun submitList(productList : List<Product>) {
+        this.productList.clear()
         this.productList.addAll(productList)
         notifyDataSetChanged()
     }
