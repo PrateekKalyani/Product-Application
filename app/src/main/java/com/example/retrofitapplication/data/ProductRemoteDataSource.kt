@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 interface ProductRemoteDataSource {
 
-    suspend fun getProduct() : LiveData<List<ProductModel>>
+    suspend fun getProduct() : List<ProductModel>
 }
 
 class ProductRemoteDataSourceImpl
@@ -19,22 +19,8 @@ class ProductRemoteDataSourceImpl
         private val productApiService: ProductApiService
         ) : ProductRemoteDataSource {
 
-    private var productList = MutableLiveData<List<ProductModel>>()
 
-    override suspend fun getProduct(): MutableLiveData<List<ProductModel>> {
-
-        try {
-            val response = productApiService.getData()
-
-            if(response.isSuccessful) {
-                println("data : ${response.body()!!}")
-                productList.postValue(response.body()!!)
-            }
-
-        } catch (e : Exception) {
-            println("exception : $e")
-        }
-
-        return productList
+    override suspend fun getProduct(): List<ProductModel> {
+        return productApiService.getData().body()!!
     }
 }

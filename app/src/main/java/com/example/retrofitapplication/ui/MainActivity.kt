@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setProductList() {
 
-        viewModel.productList.observe(this, Observer {list ->
+        viewModel.productList.observe(this, Observer { list ->
             if (list != null) {
                 (binding.productRecyclerView.adapter as ProductAdapter).submitList(list)
             }

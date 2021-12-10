@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.retrofitapplication.data.*
 import com.example.retrofitapplication.domain.ProductUseCase
 import com.example.retrofitapplication.mapper.CacheMapper
+import com.example.retrofitapplication.room.ProductDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,19 +16,22 @@ import dagger.hilt.components.SingletonComponent
 object ProductModule {
 
     @Provides
-    fun getContext(@ApplicationContext context: Context) : Context {
-        return context
-    }
-
-    @Provides
     fun getCacheMapper() : CacheMapper {
         return CacheMapper()
     }
+
 
     @Provides
     fun getProductRemoteDataSource(productApiService : ProductApiService) : ProductRemoteDataSource {
         return ProductRemoteDataSourceImpl(
             productApiService = productApiService
+        )
+    }
+
+    @Provides
+    fun getProductCacheDataSource(productDao: ProductDao) : ProductCacheDataSource {
+        return ProductCacheDataSourceImpl(
+            productDao = productDao
         )
     }
 

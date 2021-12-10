@@ -23,7 +23,7 @@ constructor(
 
     fun getProducts() {
         viewModelScope.launch {
-            _productList.postValue(productUseCase.getProduct().value)
+            _productList.postValue(productUseCase.getProduct())
         }
     }
 }
