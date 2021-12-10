@@ -10,7 +10,7 @@ constructor(
     private val productRepository: ProductRepository
 ) {
 
-    fun getProduct(): LiveData<List<ProductModel>> {
+    suspend fun getProduct(): LiveData<List<ProductModel>> {
         return productRepository.getProduct()
     }
 }

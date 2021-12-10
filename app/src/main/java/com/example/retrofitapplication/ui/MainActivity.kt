@@ -6,7 +6,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.retrofitapplication.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -30,17 +32,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.productRefreshLayout.setOnRefreshListener {
-            setProductList()
+            viewModel.getProducts()
             binding.productRefreshLayout.isRefreshing = false
         }
     }
 
     private fun setProductList() {
 
-        viewModel.getProducts().observe(this, Observer {list ->
+        viewModel.productList.observe(this, Observer {list ->
             if (list != null) {
                 (binding.productRecyclerView.adapter as ProductAdapter).submitList(list)
             }
         })
+
+        viewModel.getProducts()
     }
 }

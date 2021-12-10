@@ -7,18 +7,17 @@ import javax.inject.Inject
 
 interface ProductRepository {
 
-    fun getProduct() : LiveData<List<ProductModel>>
+    suspend fun getProduct() : LiveData<List<ProductModel>>
 }
 
 class ProductRepositoryImpl
     @Inject
-    constructor (
+    constructor(
         private val productRemoteDataSource: ProductRemoteDataSource,
         private val cacheMapper : CacheMapper
         ) : ProductRepository {
 
-    override fun getProduct(): LiveData<List<ProductModel>> {
-
+    override suspend fun getProduct(): LiveData<List<ProductModel>> {
         return productRemoteDataSource.getProduct()
     }
 }

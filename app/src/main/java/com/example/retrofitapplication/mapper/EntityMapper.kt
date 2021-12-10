@@ -19,6 +19,7 @@ class CacheMapper
 @Inject
 constructor()
     : EntityMapper<ProductEntity, ProductModel>{
+
     override fun mapFromEntity(entity: ProductEntity): ProductModel {
         return ProductModel(
             id = entity.id,

@@ -26,7 +26,9 @@ object ProductModule {
 
     @Provides
     fun getProductRemoteDataSource(productApiService : ProductApiService) : ProductRemoteDataSource {
-        return ProductRemoteDataSourceImpl(productApiService = productApiService)
+        return ProductRemoteDataSourceImpl(
+            productApiService = productApiService
+        )
     }
 
     @Provides
@@ -43,6 +45,8 @@ object ProductModule {
 
     @Provides
     fun getProductUserCase(productRepository: ProductRepository) : ProductUseCase {
-        return ProductUseCase(productRepository =  productRepository)
+        return ProductUseCase(
+            productRepository =  productRepository
+        )
     }
 }

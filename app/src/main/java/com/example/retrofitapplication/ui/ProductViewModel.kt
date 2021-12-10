@@ -1,12 +1,12 @@
 package com.example.retrofitapplication.ui
 
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.retrofitapplication.domain.ProductUseCase
 import com.example.retrofitapplication.models.ProductModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,7 +17,13 @@ constructor(
     private val savedStateHandle: SavedStateHandle,
     ) : ViewModel(), LifecycleObserver {
 
-    fun getProducts(): LiveData<List<ProductModel>>{
-        return productUseCase.getProduct()
+    private val _productList = MutableLiveData<List<ProductModel>>()
+    val productList : LiveData<List<ProductModel>>
+    get() = _productList
+
+    fun getProducts() {
+        viewModelScope.launch {
+            _productList.postValue(productUseCase.getProduct().value)
+        }
     }
 }
