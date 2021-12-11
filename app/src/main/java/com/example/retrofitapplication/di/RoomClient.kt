@@ -2,6 +2,8 @@ package com.example.retrofitapplication.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.retrofitapplication.data.ProductCacheDataSource
+import com.example.retrofitapplication.data.ProductCacheDataSourceImpl
 import com.example.retrofitapplication.room.ProductDao
 import com.example.retrofitapplication.room.ProductDatabase
 import dagger.Module
@@ -28,5 +30,10 @@ object RoomClient {
         }
 
         return databaseBuilder!!
+    }
+
+    @Provides
+    fun getProductCacheDataSource(productDao: ProductDao) : ProductCacheDataSource {
+        return ProductCacheDataSourceImpl(productDao = productDao)
     }
 }

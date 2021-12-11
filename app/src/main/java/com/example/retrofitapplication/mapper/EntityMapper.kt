@@ -1,6 +1,7 @@
 package com.example.retrofitapplication.mapper
 
 import com.example.retrofitapplication.models.ProductModel
+import com.example.retrofitapplication.models.RatingModel
 import com.example.retrofitapplication.room.ProductEntity
 import javax.inject.Inject
 
@@ -28,7 +29,10 @@ constructor()
             description  = entity.description,
             category = entity.category,
             image = entity.image,
-            rating = entity.rating
+            rating = RatingModel(
+                rate = entity.rate,
+                count = entity.count
+            )
         )
     }
 
@@ -40,7 +44,8 @@ constructor()
             description  = domainModel.description,
             category = domainModel.category,
             image = domainModel.image,
-            rating = domainModel.rating
+            rate = domainModel.rating.rate,
+            count = domainModel.rating.count
         )
     }
 

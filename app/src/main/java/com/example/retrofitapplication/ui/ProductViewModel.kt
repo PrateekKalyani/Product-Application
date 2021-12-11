@@ -4,9 +4,7 @@ import androidx.lifecycle.*
 import com.example.retrofitapplication.domain.ProductUseCase
 import com.example.retrofitapplication.models.ProductModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 import javax.inject.Inject
 
 @HiltViewModel

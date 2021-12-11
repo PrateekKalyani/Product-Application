@@ -3,7 +3,6 @@ package com.example.retrofitapplication.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.retrofitapplication.models.RatingModel
 
 @Entity(tableName = "products")
 data class ProductEntity(
@@ -20,6 +19,8 @@ data class ProductEntity(
     val category : String,
     @ColumnInfo(name = "image")
     val image : String,
-    @ColumnInfo(name = "rating")
-    val rating : RatingModel
+    @ColumnInfo(name = "rate")
+    val rate : Float,
+    @ColumnInfo(name = "count")
+    val count : Int
 )

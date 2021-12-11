@@ -1,11 +1,6 @@
 package com.example.retrofitapplication.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.retrofitapplication.models.ProductModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 interface ProductRemoteDataSource {
@@ -19,8 +14,21 @@ class ProductRemoteDataSourceImpl
         private val productApiService: ProductApiService
         ) : ProductRemoteDataSource {
 
-
     override suspend fun getProduct(): List<ProductModel> {
-        return productApiService.getData().body()!!
+
+        val productList = mutableListOf<ProductModel>()
+
+        try {
+            val data = productApiService.getData()
+
+            if (data.isSuccessful) {
+                productList.addAll(data.body()!!)
+            }
+        }
+        catch (e : Exception) {
+
+        }
+
+        return productList
     }
 }
