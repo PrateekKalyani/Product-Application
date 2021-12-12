@@ -16,7 +16,10 @@ import dagger.hilt.components.SingletonComponent
 object ProductModule {
 
     @Provides
-    fun getUtil(@ApplicationContext context: Context) : Util {
+    fun getUtil(
+        @ApplicationContext context: Context
+    ) : Util {
+
         return Util(
             context = context
         )
@@ -28,7 +31,10 @@ object ProductModule {
     }
 
     @Provides
-    fun getProductRemoteDataSource(productApiService : ProductApiService) : ProductRemoteDataSource {
+    fun getProductRemoteDataSource(
+        productApiService : ProductApiService
+    ) : ProductRemoteDataSource {
+
         return ProductRemoteDataSourceImpl(
             productApiService = productApiService
         )
@@ -49,7 +55,11 @@ object ProductModule {
     }
 
     @Provides
-    fun getProductUserCase(productRepository: ProductRepository, util: Util) : ProductUseCase {
+    fun getProductUserCase(
+        productRepository: ProductRepository,
+        util: Util
+    ) : ProductUseCase {
+
         return ProductUseCase(
             productRepository =  productRepository,
             util =  util

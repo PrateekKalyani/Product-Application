@@ -13,7 +13,7 @@ class ProductViewModel
 constructor(
     private val productUseCase: ProductUseCase,
     private val savedStateHandle: SavedStateHandle,
-    ) : ViewModel(), LifecycleObserver {
+    ) : ViewModel() {
 
     private val _productList = MutableLiveData<List<ProductModel>>()
     val productList : LiveData<List<ProductModel>>

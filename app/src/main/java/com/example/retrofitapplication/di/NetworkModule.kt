@@ -25,7 +25,6 @@ object NetworkModule {
                 .build()
             apiService = retrofit.create(ProductApiService::class.java)
         }
-
         return apiService!!
     }
 }

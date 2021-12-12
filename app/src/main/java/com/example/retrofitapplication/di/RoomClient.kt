@@ -19,7 +19,9 @@ object RoomClient {
     private var databaseBuilder : ProductDao? = null
 
     @Provides
-    fun provideProductDao(@ApplicationContext context : Context) : ProductDao{
+    fun provideProductDao(
+        @ApplicationContext context : Context
+    ) : ProductDao {
 
         if(databaseBuilder == null) {
             databaseBuilder = Room.databaseBuilder(
@@ -28,12 +30,16 @@ object RoomClient {
                 ProductDatabase.databaseName
                 ).build().productDao()
         }
-
         return databaseBuilder!!
     }
 
     @Provides
-    fun getProductCacheDataSource(productDao: ProductDao) : ProductCacheDataSource {
-        return ProductCacheDataSourceImpl(productDao = productDao)
+    fun getProductCacheDataSource(
+        productDao: ProductDao
+    ) : ProductCacheDataSource {
+
+        return ProductCacheDataSourceImpl(
+            productDao = productDao
+        )
     }
 }

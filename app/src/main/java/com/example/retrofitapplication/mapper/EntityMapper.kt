@@ -18,8 +18,7 @@ interface EntityMapper<Entity, DomainModel> {
 
 class CacheMapper
 @Inject
-constructor()
-    : EntityMapper<ProductEntity, ProductModel>{
+constructor() : EntityMapper<ProductEntity, ProductModel> {
 
     override fun mapFromEntity(entity: ProductEntity): ProductModel {
         return ProductModel(

@@ -1,6 +1,5 @@
 package com.example.retrofitapplication.data
 
-import androidx.lifecycle.LiveData
 import com.example.retrofitapplication.room.ProductDao
 import com.example.retrofitapplication.room.ProductEntity
 import javax.inject.Inject
@@ -19,6 +18,7 @@ constructor(
     ): ProductCacheDataSource {
 
     override suspend fun getProducts(): List<ProductEntity> {
+
         return productDao.getProducts()
     }
 
@@ -27,8 +27,7 @@ constructor(
         if(productList.isEmpty()) {
             return
         }
-
-        productDao.insertProducts(productList)
+        productDao.insertProducts(productList = productList)
     }
 
 }

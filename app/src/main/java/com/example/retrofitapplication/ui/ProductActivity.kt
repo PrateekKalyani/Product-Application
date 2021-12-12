@@ -5,15 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.retrofitapplication.databinding.ActivityMainBinding
+import com.example.retrofitapplication.databinding.ActivityProductBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class ProductActivity : AppCompatActivity() {
 
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivityProductBinding.inflate(layoutInflater) }
     private val viewModel : ProductViewModel by lazy {
-        ViewModelProvider(this).get(ProductViewModel::class.java)
+        ViewModelProvider(this)[ProductViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private fun setRecyclerView() {
 
         binding.productRecyclerView.run {
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            layoutManager = LinearLayoutManager(this@ProductActivity)
             adapter = ProductAdapter()
         }
 
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.productList.observe(this, Observer { ProductList ->
             if (ProductList != null) {
-                (binding.productRecyclerView.adapter as ProductAdapter).submitList(ProductList)
+                (binding.productRecyclerView.adapter as ProductAdapter).submitList(productList = ProductList)
             }
         })
 

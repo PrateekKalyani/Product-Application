@@ -5,30 +5,27 @@ import javax.inject.Inject
 
 interface ProductRemoteDataSource {
 
-    suspend fun getProduct() : List<ProductModel>
+    suspend fun getProducts() : List<ProductModel>
 }
 
 class ProductRemoteDataSourceImpl
-    @Inject
-    constructor(
-        private val productApiService: ProductApiService
-        ) : ProductRemoteDataSource {
+@Inject
+constructor(
+    private val productApiService: ProductApiService
+    ) : ProductRemoteDataSource {
 
-    override suspend fun getProduct(): List<ProductModel> {
+    override suspend fun getProducts(): List<ProductModel> {
 
         val productList = mutableListOf<ProductModel>()
-
         try {
             val data = productApiService.getData()
-
             if (data.isSuccessful) {
-                productList.addAll(data.body()!!)
+                productList.addAll(elements = data.body()!!)
             }
         }
         catch (e : Exception) {
 
         }
-
         return productList
     }
 }
