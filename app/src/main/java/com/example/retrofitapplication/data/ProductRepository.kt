@@ -1,12 +1,12 @@
 package com.example.retrofitapplication.data
 
 import com.example.retrofitapplication.mapper.CacheMapper
-import com.example.retrofitapplication.models.ProductModel
+import com.example.retrofitapplication.models.ProductResponse
 import javax.inject.Inject
 
 interface ProductRepository {
 
-    suspend fun getProducts(isConnected: Boolean) : List<ProductModel>
+    suspend fun getProducts(isConnected: Boolean) : ProductResponse
 }
 
 class ProductRepositoryImpl
@@ -17,27 +17,27 @@ constructor(
     private val cacheMapper : CacheMapper
     ) : ProductRepository {
 
-    override suspend fun getProducts(isConnected : Boolean): List<ProductModel> {
+    override suspend fun getProducts(isConnected : Boolean): ProductResponse {
 
-        val productList = mutableListOf<ProductModel>()
-        if(isConnected) {
-            try {
-                productList.addAll(
-                    elements = productRemoteDataSource.getProducts()
-                )
+        return if(isConnected) {
+            val productResponse = productRemoteDataSource.getProducts()
+
+            if(productResponse is ProductResponse.Success) {
                 productCacheDataSource.saveProducts(
-                    productList = cacheMapper.mapToEntityList(productList)
+                    productList = cacheMapper.mapToEntityList(
+                        domainModelList = productResponse.productList
+                    )
                 )
-            } catch (e : Exception) {
-
             }
+            productResponse
         } else {
-            productList.addAll(
-                elements = cacheMapper.mapFromEntityList(
-                    entityList = productCacheDataSource.getProducts()
-                )
-            )
+            val productList = productCacheDataSource.getProducts()
+
+            if(productList.isEmpty()) {
+                ProductResponse.Error("List Empty in Cache")
+            } else {
+                ProductResponse.Success(cacheMapper.mapFromEntityList(productList))
+            }
         }
-        return productList
     }
 }

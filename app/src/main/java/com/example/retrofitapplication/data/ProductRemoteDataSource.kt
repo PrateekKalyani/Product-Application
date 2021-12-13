@@ -1,11 +1,11 @@
 package com.example.retrofitapplication.data
 
-import com.example.retrofitapplication.models.ProductModel
+import com.example.retrofitapplication.models.ProductResponse
 import javax.inject.Inject
 
 interface ProductRemoteDataSource {
 
-    suspend fun getProducts() : List<ProductModel>
+    suspend fun getProducts() : ProductResponse
 }
 
 class ProductRemoteDataSourceImpl
@@ -14,18 +14,19 @@ constructor(
     private val productApiService: ProductApiService
     ) : ProductRemoteDataSource {
 
-    override suspend fun getProducts(): List<ProductModel> {
+    override suspend fun getProducts(): ProductResponse {
 
-        val productList = mutableListOf<ProductModel>()
-        try {
-            val data = productApiService.getData()
-            if (data.isSuccessful) {
-                productList.addAll(elements = data.body()!!)
+        return try {
+            val response = productApiService.getData()
+
+            if (response.isSuccessful && response.body() != null) {
+                ProductResponse.Success(response.body()!!)
+            } else {
+                ProductResponse.Error("Server Error")
             }
-        }
-        catch (e : Exception) {
 
+        } catch (e : Exception) {
+            ProductResponse.Error(e.localizedMessage)
         }
-        return productList
     }
 }

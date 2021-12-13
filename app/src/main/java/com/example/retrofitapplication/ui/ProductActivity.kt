@@ -1,11 +1,13 @@
 package com.example.retrofitapplication.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.retrofitapplication.databinding.ActivityProductBinding
+import com.example.retrofitapplication.models.UiEvents
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,9 +41,24 @@ class ProductActivity : AppCompatActivity() {
 
     private fun setProductList() {
 
-        viewModel.productList.observe(this, Observer { ProductList ->
-            if (ProductList != null) {
-                (binding.productRecyclerView.adapter as ProductAdapter).submitList(productList = ProductList)
+        viewModel.productListUiEvents.observe(this, Observer {
+            when(it) {
+
+                is UiEvents.Success -> {
+                    (binding.productRecyclerView.adapter as ProductAdapter).submitList(productList = it.result)
+                }
+
+                is UiEvents.Error -> {
+                    Toast.makeText(
+                        this@ProductActivity,
+                        it.error,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is UiEvents.Loading -> {
+
+                }
             }
         })
 

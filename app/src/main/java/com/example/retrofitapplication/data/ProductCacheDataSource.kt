@@ -18,7 +18,6 @@ constructor(
     ): ProductCacheDataSource {
 
     override suspend fun getProducts(): List<ProductEntity> {
-
         return productDao.getProducts()
     }
 
